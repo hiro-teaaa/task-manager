@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_12_051459) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_12_071022) do
   create_table "labels", charset: "utf8mb4", force: :cascade do |t|
     t.string "label_name"
     t.string "text"
@@ -28,9 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_12_051459) do
   end
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
-    t.text "task_name"
+    t.text "task_name", null: false
     t.datetime "data_limit"
-    t.integer "priority"
+    t.integer "priority", default: 1
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
