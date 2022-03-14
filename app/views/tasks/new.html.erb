@@ -2,27 +2,6 @@
   <%= notice %>
   <%= alert %>
 </p>
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@task) do |t| %>
-      <%= render 'shared/error_messages' %>
-
-      <%= t.label :task_name %>
-      <%= t.text_field :task_name%>
-
-      <%= t.label :date_limit %>
-      <%= t.date_field :date_limit %>
-
-      <%= t.label :priority %>
-      <%= t.select :priority , [["低", 0], ["標準", 1],["高", 2]]%>
-
-      <%= t.label :status %>
-      <%= t.select :status , [["未着手", 0], ["着手中", 1],["完了", 2]]%>
-
-      <%= t.submit "新規タスク作成",  class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
-</div>
 <div>
   <%= form_with model: @task do |form| %>
     <% if @task.errors.any? %>
@@ -46,6 +25,11 @@
     <%= form.select :priority , [["低", 0], ["標準", 1],["高", 2]]%>
     <%= form.label :status %>
     <%= form.select :status , [["未着手", 0], ["着手中", 1],["完了", 2]]%>
+    <div class="field">
+      <%= form.collection_check_boxes(:label_ids, Label.all, :id, :label_name)  do |b| %>
+        <%= b.label { b.check_box + b.text } %>
+      <% end %>
+    </div>
     <%= form.submit  "タスク作成"%>
   <% end %>
 </div>
