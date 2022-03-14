@@ -9,6 +9,7 @@
     <th>優先度</th>
     <th>ステータス</th>
     <th>label</th>
+    <th>削除</th>
   </tr>
   </thead>
 <tbody>
@@ -23,6 +24,7 @@
         <%= label.label_name %>
       <% end %>
     </td>
+    <td><%= link_to("削除", "/tasks/#{task.id}/destroy", {method: "post"} ) %></td>
   </tr>
 <% end %>
 </tbody>
