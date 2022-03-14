@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     end
   end
   def index
-    @tasks = TaskLabel.joins(:task).select('*')
+    @tasks = Task.left_joins(:task_labels).select('*')
   end
 
 end

@@ -23,3 +23,29 @@
     <% end %>
   </div>
 </div>
+<div>
+  <%= form_with model: @task do |form| %>
+    <% if @task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.label :task_name %>
+    <%= form.text_field :task_name%>
+
+    <%= form.label :date_limit %>
+    <%= form.date_field :date_limit %>
+    <%= form.label :priority %>
+    <%= form.select :priority , [["低", 0], ["標準", 1],["高", 2]]%>
+    <%= form.label :status %>
+    <%= form.select :status , [["未着手", 0], ["着手中", 1],["完了", 2]]%>
+    <%= form.submit  "タスク作成"%>
+  <% end %>
+</div>

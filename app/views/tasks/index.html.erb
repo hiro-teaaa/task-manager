@@ -1,19 +1,24 @@
 <h1>Tasks#index</h1>
 <p>Find me in app/views/main/index.html.erb</p>
-<button @click = ></button>
+<%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, {method: :get } %>
 <table>
   <thead>
   <tr>
-    <th>taskName</th>
-    <th>taskName</th>
+    <th>タスク名</th>
+    <th>ラベル</th>
+    <th>終了期限</th>
+    <th>優先度</th>
+    <th>ステータス</th>
   </tr>
   </thead>
 <tbody>
 <% @tasks.each do |task| %>
   <tr>
     <td><%= task.task_name %></td>
-  <td><%= task.label_id %></td>
-    <td><%= task.task_id %></td>
+    <td><%= task.label_id %></td>
+    <td><%= task.date_limit %></td>
+    <td><%= task.priority %></td>
+    <td><%= task.status %></td>
   </tr>
 <% end %>
 </tbody>
