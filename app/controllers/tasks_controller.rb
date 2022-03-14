@@ -13,10 +13,12 @@ class TasksController < ApplicationController
     @label_ids=params[:task][:label_ids]
     @label_ids.shift
     if @task.save
+      labels_array = []
       @label_ids.each do |label_id|
         label=Label.find(label_id.to_i)
-        @task.labels << label
+        labels_array.push(label)
       end
+      @task.labels = labels_array
       redirect_to action: :new
       flash[:notice] =  'タスクの登録に成功しました'
     else
@@ -24,8 +26,38 @@ class TasksController < ApplicationController
       flash[:alert] =  'タスクの登録に失敗しました'
     end
   end
+
+  def edit
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+  end
+  def update
+    @label_ids=params[:task][:label_ids]
+    @label_ids.shift
+    if @task.update(task_params)
+      redirect_to request.referer
+      labels_array = []
+      @label_ids.each do |label_id|
+        label=Label.find(label_id.to_i)
+        labels_array.push(label)
+      end
+      @task.labels = labels_array
+    end
+    #TODO: Unpermitted parameter: :label_ids. と出てしまう
+    # ,{:label_ids: []} を追加するとundefined method `task_name' for #<Label id: 2... と出てしまいうまくいかない
+    # 最適解がありそうなので堀井さんに伺う
+  end
   def index
-    @tasks = Task.left_joins(:task_labels).select('*')
+    @tasks = Task.all
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+  end
+
+
+  private
+  def set_task
+    @task = Task.find(params[:id])
+  end
+  def task_params
+    params.require(:task).permit(:task_name, :date_limit, :priority, :status)
   end
 
 end

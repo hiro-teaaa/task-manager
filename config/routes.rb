@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "tasks#index"
   get 'tasks/new', :to => 'task#new'
   get 'task/:id', :to => 'task#show'
+  get 'tasks/:id/edit', :to => 'task#edit'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
