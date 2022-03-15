@@ -2,21 +2,21 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def new
-    @task = Task.new
+    @task = Task.new()
     @lablels=Label.all
   end
   def create
-    @task = Task.new(params.require(:task).permit(:task_name, :date_limit, :priority, :status))
-    #TODO: label_ids のparamからの取り出し方の最適解
-    @label_ids=params[:task][:label_ids]
-    @label_ids.shift
+    @task = Task.new(task_params)
     if @task.save
-      labels_array = []
-      @label_ids.each do |label_id|
-        label=Label.find(label_id.to_i)
-        labels_array.push(label)
+      if params[:task][:label_ids]
+        begin
+          @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
+        rescue
+          @task.destroy
+          redirect_to action: :new
+          flash[:alert] =  'タスクの登録に失敗しました'
+        end
       end
-      @task.labels = labels_array
       redirect_to action: :new
       flash[:notice] =  'タスクの登録に成功しました'
     else
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
       flash[:notice] =  'タスクの編集に成功しました'
     else
       redirect_to request.referer
-      flash[:alert] =  'タスクの登録に失敗しました'
+      flash[:alert] =  'タスクの編集に失敗しました'
     end
   end
   def index
@@ -53,6 +53,8 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     redirect_to request.referer
+    flash[:alert] =  'タスクを削除しました'
+    # TODO: 削除失敗時の処理を書く
   end
 
 
@@ -61,7 +63,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
   def task_params
-    params.require(:task).permit(:task_name, :date_limit, :priority, :status)
+    params.require(:task).permit(:task_name, :date_limit, :priority, :status, :label_ids)
   end
 
 end

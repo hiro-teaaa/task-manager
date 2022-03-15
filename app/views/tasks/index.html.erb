@@ -1,5 +1,8 @@
 <h1>Tasks#index</h1>
-<p>Find me in app/views/main/index.html.erb</p>
+<p>
+  <%= notice %>
+  <%= alert %>
+</p>
 <%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, {method: :get } %>
 <table>
   <thead>
