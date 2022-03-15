@@ -46,10 +46,6 @@ class TasksController < ApplicationController
       redirect_to request.referer
       flash[:alert] =  'タスクの登録に失敗しました'
     end
-
-    #TODO: Unpermitted parameter: :label_ids. と出てしまう
-    # ,{:label_ids: []} を追加するとundefined method `task_name' for #<Label id: 2... と出てしまいうまくいかない
-    # 最適解がありそうなので堀井さんに伺う
   end
   def index
     @tasks = Task.all
