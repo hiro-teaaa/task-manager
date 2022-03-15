@@ -7,9 +7,7 @@ class TasksController < ApplicationController
   end
   def create
     @task = Task.new(params.require(:task).permit(:task_name, :date_limit, :priority, :status))
-    #TODO: Unpermitted parameter: :label_ids. と出てしまう
-    # ,{:label_ids: []} を追加するとundefined method `task_name' for #<Label id: 2... と出てしまいうまくいかない
-    # 最適解がありそうなので堀井さんに伺う
+    #TODO: label_ids のparamからの取り出し方の最適解
     @label_ids=params[:task][:label_ids]
     @label_ids.shift
     if @task.save
