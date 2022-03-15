@@ -29,15 +29,10 @@ class TasksController < ApplicationController
     @task = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
   def update
-    @label_ids=params[:task][:label_ids]
-    @label_ids.shift
     if @task.update(task_params)
-      labels_array = []
-      @label_ids.each do |label_id|
-        label=Label.find(label_id.to_i)
-        labels_array.push(label)
-      end
-      @task.labels = labels_array
+        if params[:task][:label_ids]
+          @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
+        end
       redirect_to request.referer
       flash[:notice] =  'タスクの編集に成功しました'
     else
