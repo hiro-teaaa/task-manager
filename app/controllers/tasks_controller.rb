@@ -29,9 +29,12 @@ class TasksController < ApplicationController
     @task = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
   def update
+    @prev_task = @task.deep_dup
     if @task.update(task_params)
         if params[:task][:label_ids]
+          # TODO: label編集失敗時にrollbackについて実装する
           @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
+
         end
       redirect_to request.referer
       flash[:notice] =  'タスクの編集に成功しました'
