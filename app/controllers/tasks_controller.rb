@@ -7,16 +7,10 @@ class TasksController < ApplicationController
   end
   def create
     @task = Task.new(task_params)
+    if params[:task][:label_ids]
+      @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
+    end
     if @task.save
-      if params[:task][:label_ids]
-        begin
-          @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
-        rescue
-          @task.destroy
-          redirect_to action: :new
-          flash[:alert] =  'タスクの登録に失敗しました'
-        end
-      end
       redirect_to action: :new
       flash[:notice] =  'タスクの登録に成功しました'
     else
@@ -29,13 +23,8 @@ class TasksController < ApplicationController
     @task = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
   def update
-    @prev_task = @task.deep_dup
+    @task.labels = params[:task][:label_ids]? params[:task][:label_ids].map { |id| Label.find(id.to_i) } : []
     if @task.update(task_params)
-        if params[:task][:label_ids]
-          # TODO: label編集失敗時にrollbackについて実装する
-          @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
-
-        end
       redirect_to request.referer
       flash[:notice] =  'タスクの編集に成功しました'
     else
