@@ -7,12 +7,12 @@
 <table>
   <thead>
   <tr>
-    <th>タスク名</th>
-    <th>終了期限</th>
-    <th>優先度</th>
-    <th>ステータス</th>
-    <th>label</th>
-    <th>削除</th>
+    <th scope="col"><%=  sort_order "task_name", "タスク名" %></th>
+    <th scope="col"><%=  sort_order "date_limit", "終了期限" %></th>
+    <th scope="col"><%=  sort_order "priority", "優先度" %></th>
+    <th scope="col">ステータス </th>
+    <th scope="col"> label </th>
+    <th scope="col"> 削除 </th>
   </tr>
   </thead>
 <tbody>
