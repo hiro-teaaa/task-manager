@@ -55,7 +55,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
   def task_params
-    params.require(:task).permit(:task_name, :date_limit, :priority, :status, :label_ids)
+    params.require(:task).permit(:task_name, :detail, :date_limit, :priority, :status)
   end
   # ----
   # to sort functions

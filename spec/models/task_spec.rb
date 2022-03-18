@@ -5,6 +5,7 @@ RSpec.describe Task, type: :model do
   it "is　valid with a task_name, date_limit, priority, status" do
     task = Task.new(
       task_name: "テストタスク",
+      detail: "テストタスク詳細",
       date_limit: "2022-01-10",
       priority: 2,
       status: 0
@@ -34,7 +35,7 @@ RSpec.describe Task, type: :model do
 
   ## 境界値
   it "is valid with a length of task_name is 255" do
-    task = Task.new(task_name: "a" * 255)
+    task = Task.new(task_name: "a" * 255, detail: "a" * 255)
     expect(task).to be_valid
   end
 
@@ -48,6 +49,11 @@ RSpec.describe Task, type: :model do
     task = Task.new(task_name: "a" * 256)
     task.valid?
     expect(task.errors[:task_name]).to include("is too long (maximum is 255 characters)")
+  end
+  it "is invalid with over 255 of detail length" do
+    task = Task.new(detail: "a" * 256)
+    task.valid?
+    expect(task.errors[:detail]).to include("is too long (maximum is 255 characters)")
   end
   it "is invalid with type of priority isnt INT" do
     task = Task.new(task_name: "test_task", priority: "a" )
