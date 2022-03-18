@@ -18,6 +18,15 @@ RSpec.describe Task, type: :model do
     )
     expect(task).to be_valid
   end
+  #日付が正しく保存されていることを確認
+  it 'should Task be created with correct date_limit with valid input' do
+    date = "2021-01-10"
+    task = Task.create(
+      task_name: "テストタスク",
+      date_limit: date
+      )
+    expect(task.date_limit.strftime("%Y-%m-%d").to_s).to eq date
+  end
 
   # label追加
   # TODO: ラベル追加
@@ -49,5 +58,9 @@ RSpec.describe Task, type: :model do
     task = Task.new(task_name: "test_task", status: "a" )
     task.valid?
     expect(task.errors[:status]).to include("is not a number")
+  end
+  it 'should date_limit be nil with invalid Type' do
+    task = Task.create(task_name: "invalid_task1", date_limit: "invalid_date_limit")
+    expect(task.date_limit).to eq nil
   end
 end
