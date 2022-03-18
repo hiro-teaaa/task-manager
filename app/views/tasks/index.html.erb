@@ -12,6 +12,7 @@
     <th scope="col"><%=  sort_order "priority", "優先度" %></th>
     <th scope="col">ステータス </th>
     <th scope="col"> label </th>
+    <th scope="col"><%=  sort_order "created_at", "作成日" %></th>
     <th scope="col"> 削除 </th>
   </tr>
   </thead>
@@ -27,6 +28,7 @@
         <%= label.label_name %>
       <% end %>
     </td>
+    <td><%= task.created_at %></td>
     <td><%= link_to("削除", "/tasks/#{task.id}/destroy", {method: "post"} ) %></td>
   </tr>
 <% end %>
