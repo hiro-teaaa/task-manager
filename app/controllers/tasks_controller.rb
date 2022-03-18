@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
+  helper_method :sort_column, :sort_direction
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  # CRUD
   def new
     @task = Task.new()
     @lablels=Label.all
@@ -32,10 +33,6 @@ class TasksController < ApplicationController
       flash[:alert] =  'タスクの編集に失敗しました'
     end
   end
-  def index
-    @tasks = Task.all
-    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
-  end
 
   def destroy
     @task.destroy
@@ -43,14 +40,30 @@ class TasksController < ApplicationController
     flash[:alert] =  'タスクを削除しました'
     # TODO: 削除失敗時の処理を書く
   end
+  # -----
+  # index
+  def index
+    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+  end
+  # -----
 
 
   private
+  # before_action
   def set_task
     @task = Task.find(params[:id])
   end
   def task_params
     params.require(:task).permit(:task_name, :date_limit, :priority, :status, :label_ids)
   end
+  # ----
+  # to sort functions
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
 
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
 end
