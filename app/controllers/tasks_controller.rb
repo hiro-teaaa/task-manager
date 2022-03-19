@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :select_status
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_prev_params, only: [:index]
   # CRUD
   def new
     @task = Task.new()
@@ -43,7 +44,8 @@ class TasksController < ApplicationController
   # -----
   # index
   def index
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks = params[:status] ?  Task.where(status: select_status) : Task.all
+    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
   # -----
@@ -57,6 +59,11 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:task_name, :detail, :date_limit, :priority, :status)
   end
+  def set_prev_params
+    @prev_params = params
+    @prev_params.delete(:controller)
+    @prev_params.delete(:action)
+  end
   # ----
   # to sort functions
   def sort_direction
@@ -65,5 +72,9 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
+
+  def select_status
+    [0, 1, 2].include?(params[:status].to_i) ? params[:status] : 0
   end
 end
