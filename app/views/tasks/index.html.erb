@@ -7,6 +7,7 @@
 <p><%= request.referer %></p>
 <p><%= @prev_params %></p>
 <p><%= params_generator({ status: 1 })%></p>
+<%= button_to "ラベル管理", "/labels", {method: :get } %>
 <%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, {method: :get } %>
 <%= button_to "条件を全てリセット","/tasks", { method: :get, params: {reset: true} } %>
 <%= form_with url:"/tasks", method: :get do |f| %>

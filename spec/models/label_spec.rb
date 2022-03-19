@@ -29,5 +29,11 @@ RSpec.describe Label, type: :model do
     label.valid?
     expect(label.errors[:label_name]).to include("is too long (maximum is 10 characters)")
   end
+  it "should not create ununique label" do
+    Label.create(label_name: "testLabel")
+    label = Label.new(label_name: "testLabel")
+    label.valid?
+    expect(label.errors[:label_name]).to include("has already been taken")
+  end
 
 end

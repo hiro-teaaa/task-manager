@@ -2,6 +2,7 @@
   <%= notice %>
   <%= alert %>
 </p>
+<%= button_to "トップページ", "/", {method: :get } %>
 <div>
   <%= form_with model: @task do |form| %>
     <% if @task.errors.any? %>

@@ -1,17 +1,20 @@
-class LabelController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update, :destroy]
+class LabelsController < ApplicationController
+    before_action :set_task, only: [ :edit, :update, :destroy]
     # CRUD
     def new
       @label = Label.new()
+    end
+    def show
+
     end
     def create
       @label = Label.new(label_params)
 
       if @label.save
-        redirect_to action: :index
+        redirect_to request.referer
         flash[:notice] =  'ラベルの登録に成功しました'
       else
-        redirect_to action: :index
+        redirect_to request.referer
         flash[:alert] =  'ラベルの登録に失敗しました'
       end
     end
@@ -20,23 +23,24 @@ class LabelController < ApplicationController
     end
     def update
       if @label.update(label_params)
-        redirect_to request.referer
+        redirect_to "/labels"
         flash[:notice] =  'ラベルの編集に成功しました'
       else
-        redirect_to request.referer
+        redirect_to "/labels"
         flash[:alert] =  'ラベルの編集に失敗しました'
       end
     end
 
     def destroy
       @label.destroy
-      redirect_to request.referer
+      redirect_to "/labels"
       flash[:alert] =  'ラベルを削除しました'
     end
     # -----
     # index
     def index
-      @label = Label.all
+      @labels = Label.all
+      @new_label = Label.new
     end
     # -----
 
@@ -46,8 +50,8 @@ class LabelController < ApplicationController
     def set_task
       @label = Label.find(params[:id])
     end
-    def task_params
-      params.require(:Label).permit(:label_name)
+    def label_params
+      params.require(:label).permit(:label_name)
     end
 
 
