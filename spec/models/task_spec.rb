@@ -45,12 +45,12 @@ RSpec.describe Task, type: :model do
     task.valid?
     expect(task.errors[:task_name]).to include("can't be blank")
   end
-  it "is invalid with over 255 of task_name length" do
+  it "is invalid with over 190 of task_name length" do
     task = Task.new(task_name: "a" * 191)
     task.valid?
     expect(task.errors[:task_name]).to include("is too long (maximum is 190 characters)")
   end
-  it "is invalid with over 255 of detail length" do
+  it "is invalid with over 190 of detail length" do
     task = Task.new(detail: "a" * 191)
     task.valid?
     expect(task.errors[:detail]).to include("is too long (maximum is 190 characters)")
