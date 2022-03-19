@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
-  validates :task_name, presence: true, length: { maximum: 255 }
-  validates :detail, length: { maximum: 255 }
+  validates :task_name, presence: true, length: { maximum: 190 }
+  validates :detail, length: { maximum: 190 }
   validates :priority, presence: true,  numericality: { only_integer: true}
   validates :status, presence: true,  numericality: { only_integer: true}
   has_many :task_labels, dependent: :destroy

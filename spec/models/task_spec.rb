@@ -34,8 +34,8 @@ RSpec.describe Task, type: :model do
 
 
   ## 境界値
-  it "is valid with a length of task_name is 255" do
-    task = Task.new(task_name: "a" * 255, detail: "a" * 255)
+  it "is valid with a length of task_name is 190" do
+    task = Task.new(task_name: "a" * 190, detail: "a" * 190)
     expect(task).to be_valid
   end
 
@@ -45,15 +45,15 @@ RSpec.describe Task, type: :model do
     task.valid?
     expect(task.errors[:task_name]).to include("can't be blank")
   end
-  it "is invalid with over 255 of task_name length" do
-    task = Task.new(task_name: "a" * 256)
+  it "is invalid with over 190 of task_name length" do
+    task = Task.new(task_name: "a" * 191)
     task.valid?
-    expect(task.errors[:task_name]).to include("is too long (maximum is 255 characters)")
+    expect(task.errors[:task_name]).to include("is too long (maximum is 190 characters)")
   end
-  it "is invalid with over 255 of detail length" do
-    task = Task.new(detail: "a" * 256)
+  it "is invalid with over 190 of detail length" do
+    task = Task.new(detail: "a" * 191)
     task.valid?
-    expect(task.errors[:detail]).to include("is too long (maximum is 255 characters)")
+    expect(task.errors[:detail]).to include("is too long (maximum is 190 characters)")
   end
   it "is invalid with type of priority isnt INT" do
     task = Task.new(task_name: "test_task", priority: "a" )
