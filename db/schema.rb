@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_18_140658) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_19_081001) do
   create_table "labels", charset: "utf8mb4", force: :cascade do |t|
     t.string "label_name"
     t.datetime "created_at", null: false
@@ -27,13 +27,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_18_140658) do
   end
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
-    t.text "task_name", null: false
+    t.string "task_name", null: false
     t.datetime "date_limit"
     t.integer "priority", default: 1
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "detail"
+    t.index ["status"], name: "index_tasks_on_status"
+    t.index ["task_name"], name: "index_tasks_on_task_name"
   end
 
   add_foreign_key "task_labels", "labels"
