@@ -51,6 +51,7 @@ class TasksController < ApplicationController
       @tasks = params[:search_word] ? @tasks.where("task_name LIKE ?", "%#{params[:search_word]}%") : @tasks
       @tasks = @tasks.order("#{sort_column} #{sort_direction}")
       @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+      @tasks = @tasks.page(params[:page]).per(10)
     end
 
   end
