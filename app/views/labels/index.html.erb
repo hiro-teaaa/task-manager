@@ -1,0 +1,24 @@
+<h1>Tasks#index</h1>
+<p>
+  <%= notice %>
+  <%= alert %>
+</p>
+<%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, {method: :get } %>
+<table>
+  <thead>
+  <tr>
+    <th scope="col"><%=  sort_order "task_name", "ラベル名" %></th>
+    <th scope="col"><%=  sort_order "created_at", "作成日" %></th>
+    <th scope="col"> 削除 </th>
+  </tr>
+  </thead>
+<tbody>
+<% labels.each do |label| %>
+  <tr>
+    <td><%= link_to label.task_name, edit_label_path(label) %></td>
+    <td><%= label.created_at %></td>
+    <td><%= link_to("削除", "/labels/#{task.id}/destroy", {method: "post"} ) %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
