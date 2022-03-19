@@ -8,6 +8,6 @@ module TasksHelper
 
   def params_generator(title='', params)
     new_params = @prev_params.merge(params)
-    link_to title, new_params.permit(:direction, :sort, :status)
+    link_to title, new_params.permit(:direction, :sort, :status, :search_word)
   end
 end

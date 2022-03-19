@@ -44,9 +44,15 @@ class TasksController < ApplicationController
   # -----
   # index
   def index
-    @tasks = params[:status] ?  Task.where(status: select_status) : Task.all
-    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
-    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    if params[:reset]
+      @tasks = Task.all
+    else
+      @tasks = params[:status] ?  Task.where(status: select_status) : Task.all
+      @tasks = params[:search_word] ? @tasks.where("task_name LIKE ?", "%#{params[:search_word]}%") : @tasks
+      @tasks = @tasks.order("#{sort_column} #{sort_direction}")
+      @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    end
+
   end
   # -----
 

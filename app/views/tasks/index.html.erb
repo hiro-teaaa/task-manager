@@ -8,11 +8,16 @@
 <p><%= @prev_params %></p>
 <p><%= params_generator({ status: 1 })%></p>
 <%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, {method: :get } %>
+<%= button_to "条件を全てリセット","/tasks", { method: :get, params: {reset: true} } %>
+<%= form_with url:"/tasks", method: :get do |f| %>
+  <%= f.text_field :search_word %>
+  <%= f.submit "検索" %>
+<% end %>
 <p>ステータスで絞り込む</p>
 <table>
   <thead>
   <tr>
-    <th><%= link_to 'なし', { status: nil }%></th>
+    <th><%=  params_generator('なし', { status: nil })%></th>
     <th><%= params_generator('未着手', { status: 0 })%></th>
     <th><%= params_generator('着手中', { status: 1 })%></th>
     <th><%= params_generator('完了', { status: 2 })%></th>
