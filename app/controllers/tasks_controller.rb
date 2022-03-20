@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction, :select_status
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :set_prev_params, only: [:index]
+  before_action :authenticate_user!
   # CRUD
   def new
     @task = Task.new()
@@ -10,6 +11,9 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.users = [User.find(current_user.id)]
+    #   has_many :users, through: :user_tasks にしているからarrayを渡してやらないといけない。
+    # TODO: has_oneで作り替える
     if params[:task][:label_ids]
       @task.labels = params[:task][:label_ids].map { |id| Label.find(id.to_i) }
     end
@@ -47,11 +51,12 @@ class TasksController < ApplicationController
   # -----
   # index
   def index
+    @user = current_user
+    @tasks = current_user.tasks
     if params[:reset]
-      @tasks = Task.all
       @tasks = @tasks.page(params[:page]).per(20)
     else
-      @tasks = params[:status] ? Task.where(status: select_status) : Task.all
+      @tasks = params[:status] ? @tasks.where(status: select_status) : @tasks
       @tasks = params[:search_word] ? @tasks.where("task_name LIKE ?", "%#{params[:search_word]}%") : @tasks
       @tasks = @tasks.order("#{sort_column} #{sort_direction}")
       # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?

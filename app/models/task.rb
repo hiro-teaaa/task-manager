@@ -1,11 +1,12 @@
 class Task < ApplicationRecord
   validates :task_name, presence: true, length: { maximum: 190 }
   validates :detail, length: { maximum: 190 }
-  validates :priority, presence: true,  numericality: { only_integer: true}
-  validates :status, presence: true,  numericality: { only_integer: true}
+  validates :priority, presence: true, numericality: { only_integer: true }
+  validates :status, presence: true, numericality: { only_integer: true }
   has_many :task_labels, dependent: :destroy
   has_many :labels, through: :task_labels
-
+  has_many :user_tasks, dependent: :destroy
+  has_many :users, through: :user_tasks
 
   # date型の検証ができない
   # private
