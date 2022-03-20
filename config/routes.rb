@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
   resources :tasks, :task_labels, :labels
   root "tasks#index"
   get 'tasks/new', :to => 'tasks#new'
