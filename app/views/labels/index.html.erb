@@ -1,12 +1,8 @@
-<h1>Tasks#index</h1>
 <p>
   <%= notice %>
   <%= alert %>
 </p>
 <%= button_to "トップページ", "/", {method: :get } %>
-<p><%= request.path %></p>
-<p><%= request.referer %></p>
-
 <%= form_with model: @new_label do |f| %>
   <%= f.text_field :label_name %>
   <%= f.submit "ラベル新規作成"%>

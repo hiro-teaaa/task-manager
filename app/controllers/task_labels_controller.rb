@@ -1,8 +1,10 @@
 class TaskLabelsController < ApplicationController
   before_action :set_author_post, only: [:show, :edit, :update, :destroy]
+
   def new
     @task_label = TaskLabel.new
   end
+
   def create
   end
 
@@ -13,6 +15,7 @@ class TaskLabelsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_author_post
     @task_label = TaskLabel.find(params[:id])
