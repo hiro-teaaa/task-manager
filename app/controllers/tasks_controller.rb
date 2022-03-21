@@ -55,7 +55,7 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks
     unless params[:reset]
       @tasks = params[:status] ? @tasks.where(status: select_status) : @tasks
-      @tasks = params[:search_word] ? @tasks.where("task_name LIKE ? OR detail LIKE ?", "%#{params[:search_word]}%", "%#{params[:search_word]}%") : @tasks
+      @tasks = params[:search_word] ? @tasks.search(params[:search_word]) : @tasks
       @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     end
     @tasks = @tasks.includes(:labels)

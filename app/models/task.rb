@@ -15,4 +15,7 @@ class Task < ApplicationRecord
   # end
   # https://qiita.com/rotelstift/items/25b594e4f67b4a94c703
 
+  def self.search(search_word)
+    where("task_name LIKE ? OR detail LIKE ?", "%#{search_word}%", "%#{search_word}%")
+  end
 end
