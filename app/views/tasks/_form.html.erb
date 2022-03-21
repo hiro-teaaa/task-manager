@@ -24,9 +24,9 @@
     <%= form.label :date_limit %>
     <%= form.date_field :date_limit %>
     <%= form.label :priority %>
-    <%= form.select :priority , [["低", 0], ["標準", 1],["高", 2]]%>
+    <%= form.select :priority, Task.priorities.keys.to_a %>
     <%= form.label :status %>
-    <%= form.select :status , [["未着手", 0], ["着手中", 1],["完了", 2]]%>
+    <%= form.select :status, Task.statuses.keys.to_a %>
     <div class="field">
       <%= form.collection_check_boxes(:label_ids, Label.all, :id, :label_name, include_hidden: false)  do |b| %>
         <%= b.label { b.check_box + b.text } %>
