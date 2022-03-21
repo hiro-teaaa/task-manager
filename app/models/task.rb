@@ -15,4 +15,15 @@ class Task < ApplicationRecord
   # end
   # https://qiita.com/rotelstift/items/25b594e4f67b4a94c703
 
+  enum priority: {
+    低: 0,
+    標準: 1,
+    高: 2,
+  }
+
+  enum status: {
+    未着手: 0,
+    着手中: 1,
+    完了: 2,
+  }
 end
