@@ -70,3 +70,4 @@ group :development do
   # gem "spring"
 end
 
+gem "appengine", "~> 0.6.0"
