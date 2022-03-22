@@ -52,7 +52,8 @@ production:
   adapter: mysql2
   pool: 5
   timeout: 5000
-  username: "[YOUR_MYSQL_USERNAME]"
-  password: "[YOUR_MYSQL_PASSWORD]"
-  database: "cat_list_production"
+  url: "smart-bank-task:us-central1:rails-cloudsql-instance"
+  username: "root"
+  password: "v4cpJlnkq2o1Cg3F"
+  database: "task-manager-prd"
   socket: "/cloudsql/[YOUR_INSTANCE_CONNECTION_NAME]"

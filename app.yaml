@@ -1,0 +1,9 @@
+entrypoint: bundle exec rackup --port $PORT
+env: flex
+runtime: ruby
+
+env_variables:
+  SECRET_KEY_BASE: 9adef877290ece1f2c4cd60c56f6ebb97394d9584e5a10227b3c2dd5c77bc1463c5178cfad3bf5da45afd3f892c225ab7d21345d45185e13ba2a7dde1e738a3e
+
+beta_settings:
+  cloud_sql_instances: smart-bank-task:us-central1:rails-cloudsql-instance
