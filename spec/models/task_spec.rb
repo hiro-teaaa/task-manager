@@ -104,13 +104,6 @@ RSpec.describe Task, type: :model do
         email: "test@example.com",
         password: "password"
       )
-      # task_names = %w[taskA taskB taskB]
-      # task_names.each do |task_name|
-      #   Task.create(
-      #     task_name: task_name,
-      #     users: [@user]
-      #   )
-      # end
       @task = Task.create(
         task_name: 'searchWord',
         users: [@user],
@@ -118,9 +111,16 @@ RSpec.describe Task, type: :model do
       )
     end
     it "存在するタスク名で検索すると正しく結果を返す" do
-
+      #成功する
       result = Task.search("search")[0]
       expect(result.task_name).to eq @task.task_name
+    end
+
+    it "存在するタスク詳細で検索すると正しく結果を返す" do
+
+      result = Task.search("詳細text")[0]
+      expect(result.task_name).to eq @task.task_name
+      expect(result.detail).to eq @task.detail
     end
     # it "存在するタスク名で検索すると全ての結果を返す" do
     #
