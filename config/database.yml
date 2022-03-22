@@ -44,12 +44,15 @@ test:
 #
 #   production:
 #     url: <%= ENV["MY_APP_DATABASE_URL"] %>
-#
+#f
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: task_manager_production
-  username: task_manager
-  password: <%= ENV["TASK_MANAGER_DATABASE_PASSWORD"] %>
+adapter: mysql2
+pool: 5
+timeout: 5000
+username: "root"
+password: ENV[PRD_DB_PASS]
+database: "task-manager-db"
+socket: "/cloudsql/phrasal-waters-337113:us-central1:rails-cloudsql-instance"
