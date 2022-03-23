@@ -3,7 +3,7 @@ env: flex
 runtime: ruby
 
 env_variables:
-  SECRET_KEY_BASE: 1fcbc68594c29a63450c9a44f95c81195c895225f034ee4fd2f0b0fba89ebd582f3f906688038e8fd2d65cf63470ce113cf15e360add0ceddc5eec9387897bb0
+  SECRET_KEY_BASE: SECRET_KEY_BASE
 
 beta_settings:
   cloud_sql_instances: phrasal-waters-337113:us-central1:rails-cloudsql-instance
