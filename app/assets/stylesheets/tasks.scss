@@ -1,0 +1,99 @@
+tr td {
+  border: solid 1px #7A7A7A;
+
+  .task-table__label {
+    align-items: start;
+  }
+}
+
+th {
+  border: solid 1.5px black;
+}
+
+table {
+  border-collapse: collapse;
+  border: solid 1.5px black;
+  text-align: center;
+  background-color: white;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e8faf8;
+  font-family: "Noto Sans JP", "Arial";
+  padding: 0 16px;
+
+  .welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    font-size: 16px;
+  }
+}
+
+.console {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  background-color: #ff5740;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 8px;
+}
+
+.task-table-wrapper {
+  background-color: #fff5f0;
+  padding: 24px;
+}
+
+.task-table {
+  padding: 8px 16px;
+  width: 100%;
+
+  &__task-name {
+    width: 240px;
+    text-align: right;
+    padding: 8px 16px;
+  }
+
+  &__detail {
+    width: 240px;
+    height: 72px;
+    padding: 8px 16px;
+    text-align: left;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+
+  }
+
+  &__limit {
+    width: 160px;
+  }
+
+  &__priority {
+    width: 60px;
+  }
+
+  &__status {
+    height: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+}
+
+.label {
+  padding: 4px 6px;
+  border-radius: 37.5px;
+  background-color: #f9f6f3;
+  color: #fc563f;
+
+}
