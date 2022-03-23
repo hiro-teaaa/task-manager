@@ -1,60 +1,69 @@
-<h1>タスク一覧</h1>
-<div>ようこそ <%= @user.user_name %> さん</div>
+<%= stylesheet_link_tag "tasks", :media => "all" %>
+<div class="title">
+  <h1>タスク一覧</h1>
+  <div class="welcome">ようこそ <%= @user.user_name %> さん</div>
+</div>
+
 <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
 <p>
   <%= notice %>
   <%= alert %>
 </p>
-<p><%= @prev_params %></p>
-<p><%= params_generator({ status: 1 }) %></p>
-<%= button_to "ラベル管理", "/labels", { method: :get } %>
-<%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, { method: :get } %>
-<%= button_to "条件を全てリセット", "/tasks", { method: :get, params: { reset: true } } %>
-<%= form_with url: "/tasks", method: :get do |f| %>
-  <%= f.text_field :search_word %>
-  <%= f.submit "検索" %>
-<% end %>
-<p>ステータスで絞り込む</p>
-<table>
-  <thead>
-  <tr>
-    <th><%=  params_generator('なし', { status: nil })%></th>
-    <th><%= params_generator('未着手', { status: 0 })%></th>
-    <th><%= params_generator('着手中', { status: 1 })%></th>
-    <th><%= params_generator('完了', { status: 2 })%></th>
-  </tr>
-  </thead>
-</table>
-<table>
-  <thead>
-  <tr>
-    <th scope="col"><%= sort_order "task_name", "タスク名" %></th>
-    <th scope="col"><%= sort_order "detail", "タスク詳細" %></th>
-    <th scope="col"><%= sort_order "date_limit", "終了期限" %></th>
-    <th scope="col"><%= sort_order "priority", "優先度" %></th>
-    <th scope="col">ステータス</th>
-    <th scope="col"> label</th>
-    <th scope="col"><%= sort_order "created_at", "作成日" %></th>
-    <th scope="col"> 削除</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @tasks.each do |task| %>
+
+
+<div class="task-table-wrapper">
+  <p>ステータスで絞り込む</p>
+  <div class="console">
+    <%= button_to "ラベル管理", "/labels", { method: :get, class: "button" } %>
+    <%= button_to "タスク新規登録", { controller: 'tasks', action: 'new' }, { method: :get, class: "button" } %>
+    <%= form_with url: "/tasks", method: :get do |f| %>
+      <%= f.text_field :search_word %>
+      <%= f.submit "検索" %>
+    <% end %>
+    <%= button_to "条件を全てリセット", "/tasks", { method: :get, params: { reset: true }, class: "button" } %>
+  </div>
+  <table class="task-table">
+    <thead>
     <tr>
-      <td><%= link_to task.task_name, edit_task_path(task) %></td>
-      <td><%= task.detail %></td>
-      <td><%= task.date_limit ? task.date_limit.strftime('%Y年%m月%d日') : '-' %></td>
-      <td><%= task.priority %></td>
-      <td><%= task.status %></td>
-      <td>
-        <% task.labels.each do |label| %>
-          <%= label.label_name %>
-        <% end %>
-      </td>
-      <td><%= task.created_at ? task.created_at.strftime('%Y年%m月%d日') : '-' %></td>
-      <td><%= link_to("削除", "/tasks/#{task.id}/destroy", { method: "post" }) %></td>
+      <th scope="col" class="task-table__task-name"><%= sort_order "task_name", "タスク名" %></th>
+      <th scope="col" class="task-table__detail"><%= sort_order "detail", "タスク詳細" %></th>
+      <th scope="col" class="task-table_limit"><%= sort_order "date_limit", "終了期限" %></th>
+      <th scope="col" class="task-table__priority"><%= sort_order "priority", "優先度" %></th>
+      <th scope="col" class="task-table__status">ステータス
+        <table>
+          <thead>
+          <tr>
+            <th><%= params_generator('なし', { status: nil }) %></th>
+            <th><%= params_generator('未着手', { status: 0 }) %></th>
+            <th><%= params_generator('着手中', { status: 1 }) %></th>
+            <th><%= params_generator('完了', { status: 2 }) %></th>
+          </tr>
+          </thead>
+        </table>
+      </th>
+      <th scope="col"> label</th>
+      <th scope="col"><%= sort_order "created_at", "作成日" %></th>
+      <th scope="col"> 削除</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td class="task-table__task-name"><%= link_to task.task_name, edit_task_path(task) %></td>
+        <td class="task-table__detail"><%= task.detail %></td>
+        <td><%= task.date_limit ? task.date_limit.strftime('%Y年%m月%d日') : '-' %></td>
+        <td><%= task.priority %></td>
+        <td><%= task.status %></td>
+        <td class="task-table__label">
+          <% task.labels.each do |label| %>
+            <span class="label"><%= label.label_name %></span>
+          <% end %>
+        </td>
+        <td><%= task.created_at ? task.created_at.strftime('%Y年%m月%d日') : '-' %></td>
+        <td><%= link_to("削除", "/tasks/#{task.id}/destroy", { method: "post" }) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 <%= paginate @tasks %>
